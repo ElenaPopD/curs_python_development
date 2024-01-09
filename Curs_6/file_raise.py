@@ -1,0 +1,6 @@
+f = open("test.txt", "w")
+f.write("Ceva")
+raise ValueError()
+f.write("altceva")
+f.write("Linia de final")
+f.close()

@@ -1,0 +1,5 @@
+BEGIN with __enter__
+update cont set sold = sold - 50 where nume = "Andrei";
+ - 
+update cont set sold = sold + 50 where nume = "Cosmin";
+COMMIT; __exit__ 

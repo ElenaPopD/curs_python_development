@@ -1,0 +1,6 @@
+print("Salut")
+nume = input("Cum te cheama? ")
+print(f"Salut {nume}!")
+ani = int(input("Cati ani ai? "))
+#ani = int(ani)
+print(type(ani))
