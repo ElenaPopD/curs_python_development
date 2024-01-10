@@ -11,6 +11,7 @@ class Jucator():
         self.sold = sold 
         self.pozitie = 0 
         self.proprietati =[]
+        self.runde_in_inchisoare = 0
         
     def da_cu_zarul(self):
         return randrange(2,12)
@@ -71,16 +72,33 @@ class Proprietate(Casuta):
 
     
 class Teren(Proprietate):
-    pass
+    def _inchiriaza(self, jucator):
+        # Verifică dacă proprietarul deține toate cele 4 proprietăți Teren
+        if len([p for p in self.proprietar.proprietati if isinstance(p, Teren)]) == 4:
+            chiria = self.chirie * 2
+        else:
+            chiria = self.chirie
 
 class Gara(Proprietate):
-    pass
+    def _inchiriaza(self, jucator):
+        # Verifică dacă proprietarul deține ambele Gări
+        if len([p for p in self.proprietar.proprietati if isinstance(p, Gara)]) == 2:
+            chiria = self.chirie * 2
+        else:
+            chiria = self.chirie
 
 class Utilitati(Proprietate):
-    pass
+    def _inchiriaza(self, jucator):
+        # Verifică dacă proprietarul deține toate cele 3 Utilități
+        if len([p for p in self.proprietar.proprietati if isinstance(p, Utilitati)]) == 3:
+            chiria = self.chirie * 3
+        else:
+            chiria = self.chirie
 
 class Inchisoare(Casuta):
-    pass
+    def visit(self, jucator):
+        print(f"{jucator} este în închisoare.")
+        jucator.runde_in_inchisoare = 3  # De exemplu, jucătorul stă 3 runde în închisoare
 
 
 
