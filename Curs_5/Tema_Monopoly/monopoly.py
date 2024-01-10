@@ -31,6 +31,8 @@ class Start(Casuta):
     def visit(self, jucator):
         print(f"{jucator} a ajuns pe {self}")
         jucator.sold += 50
+    def __repr__(self):
+        return "<Start>"
 
 class Proprietate(Casuta):
     
@@ -73,12 +75,23 @@ class Proprietate(Casuta):
     
 class Teren(Proprietate):
     def _inchiriaza(self, jucator):
-        # Verific daca proprietarul detine toate cele 4 proprietati Teren
         if len([p for p in self.proprietar.proprietati if isinstance(p, Teren)]) == 4:
             chiria = self.chirie * 2
         else:
             chiria = self.chirie
-
+        
+        if jucator.sold >= chiria:
+            jucator.sold -= chiria
+            self.proprietar.sold += chiria
+            print(f"{jucator.nume} a platit chiria de {chiria} proprietarului {self.proprietar.nume}.")
+        else:
+            print(f"{jucator.nume} nu are suficienti bani pentru a plati chiria si iese din joc.")
+            jucator.iesire_din_joc()
+            
+    def __repr__(self):
+        status_proprietar = f", Proprietar: {self.proprietar.nume}" if self.proprietar else ""
+        return f"<Teren: {self.nume}{status_proprietar}>"
+            
 class Gara(Proprietate):
     def _inchiriaza(self, jucator):
         # Verific daca proprietarul detine ambele Gari
@@ -97,8 +110,9 @@ class Utilitati(Proprietate):
 
 class Inchisoare(Casuta):
     def visit(self, jucator):
-        print(f"{jucator} este în închisoare.")
+        print(f"{jucator} este in inchisoare.")
         jucator.runde_in_inchisoare = 3  # jucatorul sta 3 runde in inchisoare
-
+    def __repr__(self):
+        return "<Inchisoare>"
 
 
