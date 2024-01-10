@@ -73,7 +73,7 @@ class Proprietate(Casuta):
     
 class Teren(Proprietate):
     def _inchiriaza(self, jucator):
-        # Verifică dacă proprietarul deține toate cele 4 proprietăți Teren
+        # Verific daca proprietarul detine toate cele 4 proprietati Teren
         if len([p for p in self.proprietar.proprietati if isinstance(p, Teren)]) == 4:
             chiria = self.chirie * 2
         else:
@@ -81,7 +81,7 @@ class Teren(Proprietate):
 
 class Gara(Proprietate):
     def _inchiriaza(self, jucator):
-        # Verifică dacă proprietarul deține ambele Gări
+        # Verific daca proprietarul detine ambele Gari
         if len([p for p in self.proprietar.proprietati if isinstance(p, Gara)]) == 2:
             chiria = self.chirie * 2
         else:
@@ -89,7 +89,7 @@ class Gara(Proprietate):
 
 class Utilitati(Proprietate):
     def _inchiriaza(self, jucator):
-        # Verifică dacă proprietarul deține toate cele 3 Utilități
+        # Verific daca proprietarul detine toate cele 3 Utilitati
         if len([p for p in self.proprietar.proprietati if isinstance(p, Utilitati)]) == 3:
             chiria = self.chirie * 3
         else:
@@ -98,7 +98,7 @@ class Utilitati(Proprietate):
 class Inchisoare(Casuta):
     def visit(self, jucator):
         print(f"{jucator} este în închisoare.")
-        jucator.runde_in_inchisoare = 3  # De exemplu, jucătorul stă 3 runde în închisoare
+        jucator.runde_in_inchisoare = 3  # jucatorul sta 3 runde in inchisoare
 
 
 
