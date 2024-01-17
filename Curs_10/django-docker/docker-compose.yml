@@ -1,5 +1,5 @@
 services:
   web:
-  build: .
-  ports:
-    -8080:5000
+    build: .
+    ports:
+      - 8080:5000
