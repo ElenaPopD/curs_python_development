@@ -29,3 +29,21 @@ class UserProfile(models.Model):
     addresa = models.CharField(max_length=1024)
     oras = models.CharField(max_length=50)
     cnp = models.CharField(max_length=13, null=True, blank=True)
+
+class Curs(models.Model):
+    nume = models.CharField(max_length=50)
+    descriere = models.CharField(max_length=1024, default='No description provided', null=True, blank=True, help_text="Intoduceti o descriere")
+
+    def __str__(self):
+        return f"Curs{self.nume}"
+
+
+class Student(models.Model):
+    nume = models.CharField(max_length=50)
+    prenume = models.CharField(max_length=50)
+    email = models.EmailField()
+    cursuri = models.ManyToManyField(Curs)
+
+    
+    def __str__(self):
+        return f"Student {self.nume} {self.prenume}"
