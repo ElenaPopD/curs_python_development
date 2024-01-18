@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Produs
+from .models import Produs, Question
 
 # Create your views here.
 def salut(request):
@@ -16,3 +16,12 @@ def lista_produse(request):
     response_string += "".join(produse_formatat)
     response_string+= "</ol>"
     return HttpResponse(response_string)
+
+
+
+
+def quiz(request):
+    question = Question.objects.first()
+    text=question.text
+    raspunsuri = [answer.value  for answer in question.answer_set.all()]
+    return HttpResponse(f"{text} <br/> {raspunsuri}")

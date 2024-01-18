@@ -13,3 +13,19 @@ class Produs(models.Model):
 class Favorit(models.Model):
     produs = models.ForeignKey(Produs, on_delete=models.CASCADE)  # noqa: F821
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Question(models.Model):
+    text = models.CharField(max_length=50)
+
+class Answer(models.Model):
+    value = models.CharField(max_length=10)
+    is_correct = models.BooleanField(default=False)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    telefon = models.CharField(max_length=15)
+    addresa = models.CharField(max_length=1024)
+    oras = models.CharField(max_length=50)
+    cnp = models.CharField(max_length=13, null=True, blank=True)
