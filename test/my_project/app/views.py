@@ -14,7 +14,8 @@ def lista_produse(request):
         produse = produse.filter(titlu__icontains=request.GET["search"])
     
     # produse = produse.order_by("pret") #pret crescator
-    produse = produse.order_by("-pret", "-titlu") # pret desc in caz egalitate filtreaza dupa titlu
+    # produse = produse.order_by("-pret") #pret descrescator
+    produse = produse.order_by("-pret", "-titlu") # pret desc in caz egalitate de pret filtreaza dupa titlu
 
     produse_formatat = [
         f"<li>{produs.titlu} - {produs.pret} - {produs.stoc}</li>"
