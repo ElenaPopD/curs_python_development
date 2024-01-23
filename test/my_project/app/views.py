@@ -8,6 +8,12 @@ def salut(request):
 
 def lista_produse(request):
     produse = Produs.objects.all()
+    if "pret_maxim" in request.GET:
+        produse = produse.filter(pret__lte=int(request.GET["pret_maxim"]))
+    if "search" in request.GET:
+        produse = produse.filter(titlu__icontains=request.GET["search"])
+    
+
     produse_formatat = [
         f"<li>{produs.titlu} - {produs.pret} - {produs.stoc}</li>"
         for produs in produse
