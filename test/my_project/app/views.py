@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Produs, Question
+from .models import Produs, Question, Recenzie
 
 # Create your views here.
 def salut(request):
@@ -13,6 +13,8 @@ def lista_produse(request):
     if "search" in request.GET:
         produse = produse.filter(titlu__icontains=request.GET["search"])
     
+    # produse = produse.order_by("pret") #pret crescator
+    produse = produse.order_by("-pret", "-titlu") # pret desc in caz egalitate filtreaza dupa titlu
 
     produse_formatat = [
         f"<li>{produs.titlu} - {produs.pret} - {produs.stoc}</li>"
@@ -24,6 +26,15 @@ def lista_produse(request):
     return HttpResponse(response_string)
 
 
+def produs(request, id):
+    try:
+        produs = Produs.objects.get(id=id)
+        # recenzii = Recenzie.objects.filter(produs=produs)
+        recenzii = produs.recenzie_set.all()
+        recenzii_str = [recenzie.titlu for recenzie in recenzii]
+    except Produs.DoesNotExist:
+        return HttpResponse("Produsul nu exista")
+    return HttpResponse(f"{produs}<br /> {recenzii_str}")
 
 
 def quiz(request):

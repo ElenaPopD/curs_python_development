@@ -8,7 +8,16 @@ class Produs(models.Model):
     stoc = models.IntegerField(default=0)
     descriere = models.CharField(max_length=1024, default='No description provided', null=True, blank=True, help_text="Intoduceti o descriere")
     imagine = models.FileField(null=True, blank=True)
+    
+    def __str__(self):
+        return f"Produs {self.titlu}"
+    
 
+class Recenzie(models.Model):
+    titlu = models.CharField(max_length=50)
+    produs = models.ForeignKey(Produs, on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    descriere = models.CharField(max_length=1024, default='No description provided', null=True, blank=True, help_text="Intoduceti o descriere")
 
 class Favorit(models.Model):
     produs = models.ForeignKey(Produs, on_delete=models.CASCADE)  # noqa: F821
