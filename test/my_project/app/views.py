@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render  # noqa: F401
 from django.http import HttpResponse
-from .models import Produs, Question, Recenzie
+from .models import Produs, Question, Recenzie  # noqa: F401
 from django.db.models import F
 
 # Create your views here.
