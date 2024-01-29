@@ -61,13 +61,13 @@ class Student(models.Model):
 
 class Elev(models.Model):
     class Meta:
-        unique_together = ["nume", "prenume"]
+        unique_together = [("nume", "prenume")]
 
 
     nume = models.CharField(max_length=50)
     prenume = models.CharField(max_length=50)
     an = models.IntegerField(default=1)
-    cursuri = models.ManyToManyField(to=Curs, through="ElevCurs")
+    cursuri = models.ManyToManyField(Curs, through='ElevCurs')
     
     def __str__(self):
         return f"Elev {self.nume} {self.prenume}"
@@ -90,14 +90,17 @@ class PostManager(models.Manager):
 
 class Post(models.Model):
     class Meta:
-        ordering = ["-visible_from"]
+        ordering = ('-updated',)
 
     titlu = models.CharField(max_length=50)
     continut = models.CharField(max_length=1024)
     visible_from = models.DateTimeField()
     end_on = models.DateTimeField(null=True, blank=True)
-
-    objects = PostManager()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    
+    
+    bjects = PostManager()
 
 # Post.objects.filter(visible_from__lte=acum).filter(Q(end_on__gte=acum) | Q(end_on__isnull=True))
 # Post.objects.active() - same as above

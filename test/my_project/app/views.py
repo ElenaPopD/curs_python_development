@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Produs, Question, Recenzie
+from django.db.models import F
 
 # Create your views here.
 def salut(request):
@@ -21,9 +22,15 @@ def lista_produse(request):
         f"<li>{produs.titlu} - {produs.pret} - {produs.stoc}</li>"
         for produs in produse
     ]
-    response_string = "<ol>"
+
+    # for produs in produse:
+    #     produs.pret += 1
+    #     produs.save()
+    produse.update(pret=F("pret")+1)
+
+    response_string = "<body><ul>"
     response_string += "".join(produse_formatat)
-    response_string+= "</ol>"
+    response_string += "</ul></body>"
     return HttpResponse(response_string)
 
 
