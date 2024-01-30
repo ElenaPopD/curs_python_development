@@ -19,20 +19,15 @@ def lista_produse(request):
     # produse = produse.order_by("-pret") #pret descrescator
     produse = produse.order_by("-pret", "-titlu") # pret desc in caz egalitate de pret filtreaza dupa titlu
 
-    produse_formatat = [
-        f"<li>{produs.titlu} - {produs.pret} - {produs.stoc}</li>"
-        for produs in produse
-    ]
+
 
     # for produs in produse:
     #     produs.pret += 1
     #     produs.save()
-    produse.update(pret=F("pret")+1)
+    # produse.update(pret=F("pret")+1)
 
-    response_string = "<body><ul>"
-    response_string += "".join(produse_formatat)
-    response_string += "</ul></body>"
-    return HttpResponse(response_string)
+    return render(request, "produse.html", {"produse": produse})
+
 
 
 def produs(request, id):
