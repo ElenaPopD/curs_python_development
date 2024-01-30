@@ -12,7 +12,9 @@
     
         <body>
             <ol>
-            {{produse}}
+            {% for produs in produse %}
+                <li>{{ produs }} - {{produs.pret}}</li>
+            {% endfor %}
             </ol>
 
         </body>
