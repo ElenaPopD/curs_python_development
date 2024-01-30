@@ -38,6 +38,7 @@ def produs(request, id):
         recenzii_str = [recenzie.titlu for recenzie in recenzii]
     except Produs.DoesNotExist:
         return HttpResponse("Produsul nu exista")
+    return render(request, "produs.html", {"produs": produs, "recenzii": recenzii})
     return HttpResponse(f"{produs}<br /> {recenzii_str}")
 
 

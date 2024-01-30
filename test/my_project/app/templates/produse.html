@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Lista produse</title>
-    </head>
-    <body>
-        <ol>
+{% extends "base.html" %}
+{% block title %}Lista produse - {{ block.super }} {% endblock title %}
+{% block body %}
             {% for produs in produse %}
-            <li>
-                <a href="{% url 'pagina-produs' produs.id %}" target="_blank">{{ produs }} by {{produs.producator}}</a> - {{ produs.pret }}
-                {%if produs.rating > 0 %}
+              <li>
+                <a href="{% url 'pagina-produs' produs.id %}" target="_blank">{{ produs }} by {{ produs.producator }}</a> - {{ produs.pret }}
+                {% if produs.rating > 0 %}
                 Rating {{ produs.rating|floatformat:2 }} / 5
                 {% else %}
-                Nu are rating inca
+                Nu exista rating-uri inca
                 {% endif %}
-            </li>
-                
+              </li>
+               
                 {% comment %}
                 <a href="/pagina-produs/{{ produs.id}}/">{{ produs }}</a>
                 {% endcomment %}
             {% endfor %}
-        </ol>
-    </body>
-</html>
+{% endblock body %}
