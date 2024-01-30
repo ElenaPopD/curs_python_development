@@ -3,7 +3,16 @@ from django.utils.timezone import now
 from django.contrib.auth.models import User
 
 # Create your models here.
+class Producator(models.Model):
+    nume = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"Producator {self.nume}"
+
+
+
 class Produs(models.Model):
+    producator = models.ForeignKey(Producator,null = True, blank = True, on_delete=models.CASCADE)
     titlu = models.CharField(max_length=50)
     pret = models.FloatField(db_index=True)
     stoc = models.IntegerField(default=0)
@@ -13,12 +22,25 @@ class Produs(models.Model):
     def __str__(self):
         return f"Produs {self.titlu}"
     
+    @property
+    def rating(self):
+        rating = 0
+        recenzii = self.recenzie_set.all()
+        for recenzie in recenzii:
+            rating +=recenzie.rating
+            try:
+                return rating // len(recenzii)
+            except ZeroDivisionError:
+                return 0
+
+    
 
 class Recenzie(models.Model):
     titlu = models.CharField(max_length=50)
     produs = models.ForeignKey(Produs, on_delete=models.CASCADE)
     rating = models.IntegerField()
     descriere = models.CharField(max_length=1024, default='No description provided', null=True, blank=True, help_text="Intoduceti o descriere")
+
 
 class Favorit(models.Model):
     produs = models.ForeignKey(Produs, on_delete=models.CASCADE)  # noqa: F821

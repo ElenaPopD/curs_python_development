@@ -1,7 +1,7 @@
 from django.shortcuts import render  # noqa: F401
 from django.http import HttpResponse
 from .models import Produs, Question, Recenzie  # noqa: F401
-from django.db.models import F
+from django.db.models import F  # noqa: F401
 
 # Create your views here.
 def salut(request):
@@ -9,7 +9,7 @@ def salut(request):
     return HttpResponse("salut din Python")
 
 def lista_produse(request):
-    produse = Produs.objects.all()
+    produse = Produs.objects.all().select_related("producator")
     if "pret_maxim" in request.GET:
         produse = produse.filter(pret__lte=int(request.GET["pret_maxim"]))
     if "search" in request.GET:

@@ -1,25 +1,20 @@
-<!DOCTYPE html> 
-
+<!DOCTYPE html>
 <html>
-
-        <head>
-    
-            <title>Lista Produse</title>
-    
-            
-    
-        </head>
-    
-        <body>
-            <ol>
+    <head>
+        <title>Lista produse</title>
+    </head>
+    <body>
+        <ol>
             {% for produs in produse %}
-                <li>{{ produs }} - {{produs.pret}}</li>
+              <li>
+                <a href="{% url 'pagina-produs' produs.id %}" target="_blank">{{ produs }} by {{produs.producator}}</a> - {{ produs.pret }}
+                Rating {{ produs.rating }} /5
+            </li>
+                
+                {% comment %}
+                <a href="/pagina-produs/{{ produs.id}}/">{{ produs }}</a>
+                {% endcomment %}
             {% endfor %}
-            </ol>
-
-        </body>
-
-
-
-
+        </ol>
+    </body>
 </html>
