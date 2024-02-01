@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from app import views
+from django.conf.urls.static import static
+from .settings import MEDIA_URL, MEDIA_ROOT
 
 
 urlpatterns = [
@@ -26,4 +28,4 @@ urlpatterns = [
     path("produs/<int:id>/", views.produs, name="pagina-produs"),
     path("quiz", views.quiz),
     path("__debug__/", include("debug_toolbar.urls"))
-]
+] + static(MEDIA_URL, document_root=MEDIA_ROOT)

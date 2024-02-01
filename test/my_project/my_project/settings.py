@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     "debug_toolbar",
+    'django.contrib.humanize',
     "app"
 ]
 
@@ -108,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "ro-ro"
 
 TIME_ZONE = 'UTC'
 
@@ -131,3 +132,6 @@ if DEBUG:
     
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["192.168.65.1", "127.0.0.1", "10.0.2.2"]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = "galerie"
