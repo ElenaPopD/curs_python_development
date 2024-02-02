@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 
 register = template.Library()
 
-@register.filter(name="starrating")
+@register.filter(name="starrating", is_safe=True)
 def starrating(value):
     # <i class="bi {% if produs.rating > 0 %} {% if produs.rating < 1 %} bi-star-half {% else %} bi-star-fill {% endif %} text-warning {% else %} bi-star {% endif %}  "></i>
     # <i class="bi {% if produs.rating > 1 %} {% if produs.rating < 2 %} bi-star-half {% else %} bi-star-fill {% endif %} text-warning {% else %} bi-star {% endif %}"></i>
