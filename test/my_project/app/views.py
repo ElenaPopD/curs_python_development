@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from .models import Produs, Question, Recenzie  # noqa: F401
 from django.db.models import F  # noqa: F401
 from django.core.mail import send_mail
-from .forms import ContactForm  # noqa: F401
+from .forms import ContactForm, CustomLoginForm # noqa: F401
+from django.contrib.auth.models import User  # noqa: F401
+from django.contrib.auth import authenticate, login, logout  # noqa: F401
 
 # Create your views here.
 def salut(request):
@@ -62,7 +64,22 @@ def contact(request):
             subiect = form.cleaned_data["subiect"]
             mesaj = form.cleaned_data["mesaj"]
             email = form.cleaned_data["email"]
+            copie= "trimite_copie" in request.POST
+            copie = form.cleaned_data["trimite_copie"]
+            print(type(copie), copie)
             send_mail(subiect, mesaj, from_email="contact@siit.ro", recipient_list=[email])
             return redirect("/")
     return render(request, "contact.html", {"form": form})
 
+def custom_login(request):
+    form = CustomLoginForm()
+    if request.method == 'POST':
+        
+        form = CustomLoginForm(request.POST)
+        if form.is_valid():
+        
+                login(request, form.authenticated_user)
+                return redirect("/")
+    
+            
+    return render(request, 'login.html', {'form': form})
