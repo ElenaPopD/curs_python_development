@@ -2,6 +2,7 @@ from django.shortcuts import render  # noqa: F401
 from django.http import HttpResponse
 from .models import Produs, Question, Recenzie  # noqa: F401
 from django.db.models import F  # noqa: F401
+from django.core.mail import send_mail
 
 # Create your views here.
 def salut(request):
@@ -50,3 +51,12 @@ def quiz(request):
     text=question.text
     raspunsuri = [answer.value  for answer in question.answer_set.all()]
     return HttpResponse(f"{text} <br/> {raspunsuri}")
+
+
+def contact(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        subject = request.POST["subiect"]
+        mesaj = request.POST["mesaj"]
+        send_mail(subject, mesaj, from_email="contact@siit.ro", recipient_list=[email])
+    return render(request, "contact.html", {})
