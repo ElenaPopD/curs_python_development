@@ -29,5 +29,6 @@ urlpatterns = [
     path("quiz", views.quiz),
     path("contact", views.contact),
     path("login", views.custom_login, name="login"),
+    path("logout", views.logout_view, name="logout"),
     path("__debug__/", include("debug_toolbar.urls"))
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
