@@ -27,7 +27,7 @@ urlpatterns = [
     path("lista-produse", views.lista_produse, name="pagina-produse"),
     path("produs/<int:id>/", views.produs, name="pagina-produs"),
     path("quiz", views.quiz),
-    path("contact", views.contact),
+    path("contact/", views.contact),
     path("login", views.custom_login, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("__debug__/", include("debug_toolbar.urls"))
