@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import authenticate
 from django.forms import ValidationError
-from . models import Produs, Question, Answer, Recenzie
+from . models import Produs, Question, Answer, Recenzie  # noqa: F401
 
 
 class ContactForm(forms.Form):

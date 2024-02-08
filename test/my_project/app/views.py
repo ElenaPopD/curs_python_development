@@ -43,7 +43,7 @@ def produs(request, id):
         produs = Produs.objects.get(id=id)
         #recenzii = Recenzie.objects.filter(produs=produs) # echivalent cu linia de mai jos
         recenzii = produs.recenzie_set.all()
-        recenzii_str = [recenzie.titlu for recenzie in recenzii]
+        recenzii_str = [recenzie.titlu for recenzie in recenzii]  # noqa: F841
     except Produs.DoesNotExist:
         return HttpResponse("404")
     return render(request, "produs.html", {"produs": produs})
