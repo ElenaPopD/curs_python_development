@@ -11,17 +11,14 @@
               
               </h5>
               <br>
-              {% comment %}
-                {{prous.rating|starrating}}
-              {% endcomment %}
               <p class="card-text">{{ produs.pret }}</p>
-              {{ produs.rating|starrating }}
-              {% if produs.rating %}
+              {% if produs.rating > 0 %}
               <p class="card-text">Rating {{ produs.rating|floatformat:2 }} / 5</p>
               {% else %}
               <p class="card-text">Nu exista rating-uri inca</p>
               {% endif %}
-              
+              {{ produs.rating|starrating }}
+            
             </div>
           </div>
         </div>

@@ -1,14 +1,16 @@
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login  # noqa: F401
 from django.contrib.auth import logout
+from  django.contrib.auth.decorators import login_required
 
 
+from .decorators import is_staff # new import
 
-from .models import Produs, Question, Answer, Recenzie
-from .forms import ContactForm, CustomLoginForm
-from django.db.models import F
+from .models import Produs, Question
+from .forms import ContactForm, CustomLoginForm, ProdusForm
+from django.db.models import F  # noqa: F401
 
 
 # Create your views here.
@@ -83,3 +85,14 @@ def custom_login(request):
 def logout_view(request):
     logout(request)
     return redirect("/")
+
+@is_staff
+@login_required
+def adauga_produs(request):
+    formular = ProdusForm()
+    if request.method == "POST":
+        formular = ProdusForm(request.POST)
+        if formular.is_valid():
+            formular.save()
+            return redirect("/contact")
+    return render(request, "adauga_produs.html", {"form": formular})
