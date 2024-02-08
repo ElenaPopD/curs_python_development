@@ -24,12 +24,14 @@ from .settings import MEDIA_URL, MEDIA_ROOT
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.salut, name="home"),
-    path("lista-produse", views.lista_produse, name="pagina-produse"),
-    path("adauga-produs/", views.adauga_produs),
-    path("produs/<int:id>/", views.produs, name="pagina-produs"),
     path("quiz", views.quiz),
     path("contact/", views.contact),
     path("login", views.custom_login, name="login"),
     path("logout", views.logout_view, name="logout"),
-    path("__debug__/", include("debug_toolbar.urls"))
+    path("__debug__/", include("debug_toolbar.urls")),
+    path("produs/lista", views.lista_produse, name="pagina-produse"),
+    path("produs/detaliu/<int:id>/", views.produs, name="pagina-produs"),
+    path("produs/adauga/", views.adauga_produs),
+    path("produs/edit/<int:produs_id>/", views.editare_produs, name="edit-produs"),
+    path("produs/editeaza/<int:pk>/", views.ProdusUpdateView.as_view()),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
