@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import User
+from django.urls import reverse, reverse_lazy
 
 # Create your models here.
 class Producator(models.Model):
@@ -35,13 +36,19 @@ class Produs(models.Model):
             except ZeroDivisionError:
                 return 0
 
-    
+    def get_absolute_url(self):
+        return reverse_lazy ("pagina-produs", args=[self.id])
 
 class Recenzie(models.Model):
     titlu = models.CharField(max_length=50)
     produs = models.ForeignKey(Produs, on_delete=models.CASCADE)
     rating = models.IntegerField()
     descriere = models.CharField(max_length=1024, default='No description provided', null=True, blank=True, help_text="Intoduceti o descriere")
+
+class Intrebare(models.Model):
+    produs = models.ForeignKey(Produs, on_delete=models.CASCADE)  # noqa: F821
+    text_intrebare = models.CharField(max_length=50)
+    text_raspuns = models.CharField(max_length=50, null=True, blank=True)
 
 
 class Favorit(models.Model):

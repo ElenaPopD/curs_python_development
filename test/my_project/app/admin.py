@@ -4,12 +4,11 @@ from django.db.models.query import QuerySet  # noqa: F401
 from django.http import HttpRequest  # noqa: F401
 
 # Register your models here.
-from .models import Produs, Favorit, Question, Answer, UserProfile, Curs, Student, Recenzie, Elev, ElevCurs, Post, Producator
+from .models import Produs, Favorit, Question, Answer, UserProfile, Curs, Student, Recenzie, Elev, ElevCurs, Post, Producator, Intrebare
 
 
 admin.site.register(Favorit)
-admin.site.register(Question)
-admin.site.register(Answer)
+
 admin.site.register(UserProfile)
 admin.site.register(Curs)
 
@@ -26,6 +25,15 @@ def retrage_din_oferta(modeladmin, request, queryset):
 
     queryset.update(stoc=0)
 
+class IntrebareInline(admin.TabularInline):
+    model = Intrebare
+    extra = 1
+    readonly_fields = ("text_intrebare", )
+
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        qs = super().get_queryset(request)
+        return super().get_queryset(request).filter(text_raspuns__isnull=True)
+
 class ProdusAdmin(admin.ModelAdmin):
     search_fields = ("titlu", "producator__nume")
     list_display = ("producator", "titlu", "stoc")
@@ -35,6 +43,8 @@ class ProdusAdmin(admin.ModelAdmin):
     list_select_related = ("producator", )
     list_editable = ("titlu", "stoc")
     actions = (retrage_din_oferta, )
+    inlines = (IntrebareInline, )
+
 
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
@@ -43,7 +53,8 @@ class ProdusAdmin(admin.ModelAdmin):
             return qs.none()
             
         return qs
-
+    
+    
 admin.site.register(Produs, ProdusAdmin)
 
 class StudentAdmin(admin.ModelAdmin):
@@ -51,3 +62,15 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ("an", )
 
 admin.site.register(Student, StudentAdmin)
+
+
+class AnswerInline(admin.StackedInline):
+    model = Answer
+    extra = 1
+
+
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerInline]
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Answer)
