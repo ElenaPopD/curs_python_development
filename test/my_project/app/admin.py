@@ -10,7 +10,15 @@ from .models import Produs, Favorit, Question, Answer, UserProfile, Curs, Studen
 admin.site.register(Favorit)
 
 admin.site.register(UserProfile)
-admin.site.register(Curs)
+
+class StudentAdmin(admin.TabularInline):
+    model = Student.cursuri.through
+    extra = 1
+
+class CursAdmin(admin.ModelAdmin):
+    inlines = (StudentAdmin, )
+
+admin.site.register(Curs, CursAdmin)
 
 admin.site.register(Recenzie)
 admin.site.register(Elev)

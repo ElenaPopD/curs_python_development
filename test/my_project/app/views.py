@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from  django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView
+import json
 
 
 from .decorators import is_staff # new import
@@ -118,3 +119,10 @@ class ProdusUpdateView(UpdateView):
     form_class = ProdusForm
     template_name = "adauga_produs.html"
     success_url = reverse_lazy("pagina-produse")
+
+
+def api_view(request):
+    raspuns = {
+        "cheie": "valoare"
+    }
+    return HttpResponse(json.dumps(raspuns), content_type="application/json")

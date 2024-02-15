@@ -18,8 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from app import views
 from django.conf.urls.static import static
+from app.api import router
 from .settings import MEDIA_URL, MEDIA_ROOT
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +34,7 @@ urlpatterns = [
     path("produs/adauga/", views.adauga_produs),
     path("produs/edit/<int:produs_id>/", views.editare_produs, name="edit-produs"),
     path("produs/editeaza/<int:pk>/", views.ProdusUpdateView.as_view()),
+    path('test_api', views.api_view),
+    path('api/', include(router.urls)),
+    path('api-auth', include('rest_framework.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
