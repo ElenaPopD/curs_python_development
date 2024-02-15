@@ -39,7 +39,7 @@ class IntrebareInline(admin.TabularInline):
     readonly_fields = ("text_intrebare", )
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        qs = super().get_queryset(request)
+        qs = super().get_queryset(request)  # noqa: F841
         return super().get_queryset(request).filter(text_raspuns__isnull=True)
 
 class ProdusAdmin(admin.ModelAdmin):
