@@ -126,3 +126,5 @@ def api_view(request):
         "cheie": "valoare"
     }
     return HttpResponse(json.dumps(raspuns), content_type="application/json")
+
+

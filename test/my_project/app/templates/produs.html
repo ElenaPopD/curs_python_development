@@ -9,9 +9,13 @@ Produs {{produs.titlu}} - {{ block.super }}
         {{ produs }} <br>
         Data crearii: {{ produs.created|naturaltime }} <br />
         Rating {{ produs.rating|starrating }}
+        <h2>Descriere</h2>
+        {{ produs.descriere|safe }}
         <h2>Recenzii</h2>
         {% for recenzie in produs.recenzie_set.all %}
             {{recenzie.titlu}} - {{ recenzie.rating }} <br/>
         {% endfor %}
         <a href="{% url 'edit-produs' produs.id %}">Editeaza</a>
+
+
 {% endblock body %}

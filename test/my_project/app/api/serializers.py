@@ -1,5 +1,18 @@
 from rest_framework.serializers import  HyperlinkedModelSerializer, SerializerMethodField
-from ..models import Produs, Producator
+from ..models import Produs, Producator, Recenzie, Intrebare
+
+class RecenzieSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = Recenzie
+        fields = "__all__"
+
+class IntrebareSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = Intrebare
+        fields = "__all__"
+
+
+        
 
 class ProdusSerializer(HyperlinkedModelSerializer):
     class Meta:
@@ -9,6 +22,10 @@ class ProdusSerializer(HyperlinkedModelSerializer):
     
 
     total_stoc = SerializerMethodField()
+    rating = SerializerMethodField()
+
+    def get_rating(self, obj):
+        return obj.rating
 
 
     def get_total_stoc(self, obj):

@@ -36,5 +36,7 @@ urlpatterns = [
     path("produs/editeaza/<int:pk>/", views.ProdusUpdateView.as_view()),
     path('test_api', views.api_view),
     path('api/', include(router.urls)),
+    path('tinymce/', include('tinymce.urls')),
     path('api-auth', include('rest_framework.urls')),
+    
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)

@@ -1,13 +1,21 @@
 from django import forms
 from django.contrib.auth import authenticate
 from django.forms import ValidationError
-from . models import Produs, Question, Answer, Recenzie  # noqa: F401
+from tinymce.widgets import TinyMCE
 
+from .models import Produs
 
 class ContactForm(forms.Form):
     email = forms.EmailField(required=True)
-    subiect = forms.CharField()
+    subiect = forms.CharField(label="Subiectul tau")
     mesaj = forms.CharField(widget=forms.Textarea())
+    trimite_copie = forms.BooleanField(required=False)
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if not email.endswith("@gmail.com"):
+            raise ValidationError("Email invalid!")
+        return email
     
     
 class CustomLoginForm(forms.Form):
@@ -25,8 +33,9 @@ class CustomLoginForm(forms.Form):
             self.authenticate_user = user
         return self.cleaned_data
     
-
 class ProdusForm(forms.ModelForm):
     class Meta:
         model = Produs
-        fields = "__all__"
+        #fields = "__all__"
+        exclude = ["imagine"]
+        widgets = {'descriere': TinyMCE(attrs={'cols': 80, 'rows': 30})}
